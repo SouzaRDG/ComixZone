@@ -37,6 +37,10 @@ namespace ComixZone.Classes
 		{
 			return this.id;
 		}
+        public TipoAutor retornaTipo()
+		{
+			return this.tipoAutor;
+		}
         public bool retornaExcluido()
 		{
 			return this.excluido;
