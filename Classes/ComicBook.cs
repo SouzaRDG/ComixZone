@@ -31,10 +31,24 @@ namespace ComixZone.Classes
             string retorno = "";
             retorno += "Titulo: " + this.titulo + Environment.NewLine;
             retorno += "Ano: " + this.ano + Environment.NewLine;
-            retorno += "Gêneros: " + this.generos + Environment.NewLine;
+            retorno += "Gêneros: ";
+            foreach(var gen in this.generos)
+            {
+                retorno += gen.ToString() + "  ";
+            }
+            retorno += Environment.NewLine;
             retorno += "Sinopse: " + this.sinopse + Environment.NewLine;
-            retorno += "Roteiro: " + this.roteiristas + Environment.NewLine;
-            retorno += "Ilustração: " + this.ilustradores + Environment.NewLine;
+            retorno += "Numero de Volumes: " + this.numeroDeVolumes + Environment.NewLine;
+            retorno += "Roteiro: ";
+            foreach(var aut in this.roteiristas)
+            {
+                retorno += aut.ToString() + "  ";
+            }
+            retorno += "Ilustração: ";
+            foreach(var aut in this.ilustradores)
+            {
+                retorno += aut.ToString() + "  ";
+            }
 
 			return retorno;
 		}
