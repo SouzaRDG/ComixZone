@@ -50,6 +50,9 @@ namespace ComixZone
 					case "C":
 						Console.Clear();
 						break;
+					case "Q":
+						ListarQuadrinhoPorTipo();
+						break;
 
 					default:
 						throw new ArgumentOutOfRangeException();
@@ -61,6 +64,31 @@ namespace ComixZone
             Console.WriteLine("\nObrigado por utilizar nossos serviços.");
 			Console.ReadLine();
         }
+
+		private static void ListarQuadrinhoPorTipo()
+		{
+			int entradaTipo = 0;
+			while(entradaTipo < 1 || entradaTipo > 5)
+			{
+				Console.WriteLine("\nSelecione o tipo desejado:");
+				foreach (int i in Enum.GetValues(typeof(TipoQuadrinho)))
+				{
+					Console.WriteLine("{0}-{1}", i, Enum.GetName(typeof(TipoQuadrinho), i));
+				}
+				entradaTipo = int.Parse(Console.ReadLine());
+			}
+			var lista = repositorioQuadrinho.Lista();
+			bool encontrado = false;
+			foreach (var quadrinho in lista)
+			{
+				encontrado = true;
+				if(!quadrinho.retornaExcluido() && quadrinho.retornaTipoQuadrinho() == (TipoQuadrinho)entradaTipo) Console.WriteLine("#ID {0}: - {1}", quadrinho.retornaId(), quadrinho.retornaTitulo());
+			}
+			if (!encontrado)
+			{
+				Console.WriteLine("\nNenhum quadrinho desse tipo cadastrado.");
+			}
+		}
 
         private static void ListarAutor()
 		{
@@ -76,9 +104,8 @@ namespace ComixZone
 
 			foreach (var autor in lista)
 			{
-                var excluido = autor.retornaExcluido();
-                
 				if(!autor.retornaExcluido())Console.WriteLine("#ID {0}: - {1}", autor.retornaId(), autor.retornaNome());
+				else Console.WriteLine("#ID {0}: - Excluido", autor.retornaId());
 			}
 		}
 
@@ -90,15 +117,14 @@ namespace ComixZone
 
 			if (lista.Count == 0)
 			{
-				Console.WriteLine("\nNenhum autor cadastrado.");
+				Console.WriteLine("\nNenhum quadrinho cadastrado.");
 				return;
 			}
 
 			foreach (var quadrinho in lista)
 			{
-                var excluido = quadrinho.retornaExcluido();
-                
-				if(!quadrinho.retornaExcluido())Console.WriteLine("#ID {0}: - {1}", quadrinho.retornaId(), quadrinho.retornaTitulo());
+				if(!quadrinho.retornaExcluido()) Console.WriteLine("#ID {0}: - {1}", quadrinho.retornaId(), quadrinho.retornaTitulo());
+				else Console.WriteLine("#ID {0}: - Excluido", quadrinho.retornaId());
 			}
 		}
 
@@ -201,7 +227,7 @@ namespace ComixZone
 
             foreach (var autor in repositorioAutor.Lista())
 			{
-				if(autor.retornaTipo() != TipoAutor.Ilustrador)Console.WriteLine("{0}-{1}", autor.retornaId(), autor.retornaNome());
+				if(autor.retornaTipo() != TipoAutor.Ilustrador && !autor.retornaExcluido()) Console.WriteLine("{0}-{1}", autor.retornaId(), autor.retornaNome());
 			}
 			Console.Write("\nDigite o ID dos roteiristas dentre as opções acima, separados por um espaço: ");
 			entradaString = Console.ReadLine().Split(' ').ToList();
@@ -211,17 +237,20 @@ namespace ComixZone
                 entradaListaRoteirista.Add(repositorioAutor.RetornaPorId(int.Parse(str)));
             }
 
-            foreach (var autor in repositorioAutor.Lista())
-			{
-				if(autor.retornaTipo() != TipoAutor.Escritor_e_Roteirista)Console.WriteLine("{0}-{1}", autor.retornaId(), autor.retornaNome());
-			}
-			Console.Write("\nDigite o ID dos roteiristas dentre as opções acima, separados por um espaço: ");
-			entradaString = Console.ReadLine().Split(' ').ToList();
             var entradaListaIlustrador = new List<Autor>();
-            foreach(var str in entradaString)
-            {
-                entradaListaIlustrador.Add(repositorioAutor.RetornaPorId(int.Parse(str)));
-            }
+			if(entradaTipo != (int)TipoQuadrinho.Livro)
+			{
+				foreach (var autor in repositorioAutor.Lista())
+				{
+					if(autor.retornaTipo() != TipoAutor.Escritor_e_Roteirista && !autor.retornaExcluido()) Console.WriteLine("{0}-{1}", autor.retornaId(), autor.retornaNome());
+				}
+				Console.Write("\nDigite o ID dos ilustradores dentre as opções acima, separados por um espaço: ");
+				entradaString = Console.ReadLine().Split(' ').ToList();
+				foreach(var str in entradaString)
+				{
+					entradaListaIlustrador.Add(repositorioAutor.RetornaPorId(int.Parse(str)));
+				}
+			}
 
             int entradaVolumes = 0;
             if(entradaTipo != (int)TipoQuadrinho.GraphicNovel && entradaTipo != (int)TipoQuadrinho.Livro)
@@ -352,7 +381,7 @@ namespace ComixZone
 
             foreach (var autor in repositorioAutor.Lista())
 			{
-				if(autor.retornaTipo() != TipoAutor.Ilustrador)Console.WriteLine("{0}-{1}", autor.retornaId(), autor.retornaNome());
+				if(autor.retornaTipo() != TipoAutor.Ilustrador && !autor.retornaExcluido()) Console.WriteLine("{0}-{1}", autor.retornaId(), autor.retornaNome());
 			}
 			Console.Write("\nDigite o ID dos roteiristas dentre as opções acima, separados por um espaço: ");
 			entradaString = Console.ReadLine().Split(' ').ToList();
@@ -362,17 +391,20 @@ namespace ComixZone
                 entradaListaRoteirista.Add(repositorioAutor.RetornaPorId(int.Parse(str)));
             }
 
-            foreach (var autor in repositorioAutor.Lista())
+			var entradaListaIlustrador = new List<Autor>();
+			if(entradaTipo != (int)TipoQuadrinho.Livro)
 			{
-				if(autor.retornaTipo() != TipoAutor.Escritor_e_Roteirista)Console.WriteLine("{0}-{1}", autor.retornaId(), autor.retornaNome());
+				foreach (var autor in repositorioAutor.Lista())
+				{
+					if(autor.retornaTipo() != TipoAutor.Escritor_e_Roteirista && !autor.retornaExcluido()) Console.WriteLine("{0}-{1}", autor.retornaId(), autor.retornaNome());
+				}
+				Console.Write("\nDigite o ID dos ilustradores dentre as opções acima, separados por um espaço: ");
+				entradaString = Console.ReadLine().Split(' ').ToList();
+				foreach(var str in entradaString)
+				{
+					entradaListaIlustrador.Add(repositorioAutor.RetornaPorId(int.Parse(str)));
+				}
 			}
-			Console.Write("\nDigite o ID dos ilustradores dentre as opções acima, separados por um espaço: ");
-			entradaString = Console.ReadLine().Split(' ').ToList();
-            var entradaListaIlustrador = new List<Autor>();
-            foreach(var str in entradaString)
-            {
-                entradaListaIlustrador.Add(repositorioAutor.RetornaPorId(int.Parse(str)));
-            }
 
             int entradaVolumes = 0;
             if(entradaTipo != (int)TipoQuadrinho.GraphicNovel && entradaTipo != (int)TipoQuadrinho.Livro)
@@ -445,26 +477,18 @@ namespace ComixZone
 
         private static string ObterOpcaoUsuario()
 		{
-			Console.WriteLine("\n\n");
+			Console.WriteLine("");
 			Console.WriteLine("ComixZone a seu dispor!!!");
 			Console.WriteLine("Informe a opção desejada:");
-            Console.WriteLine("  --_--_--_--_--_--");
-			Console.WriteLine("1- Listar autores");
-			Console.WriteLine("2- Inserir novo autor");
-			Console.WriteLine("3- Atualizar autor");
-			Console.WriteLine("4- Excluir autor");
-			Console.WriteLine("5- Visualizar autor");
-            Console.WriteLine("  --_--_--_--_--_--");
-            Console.WriteLine("6- Listar quadrinhos");
-			Console.WriteLine("7- Inserir novo quadrinho");
-			Console.WriteLine("8- Atualizar quadrinho");
-			Console.WriteLine("9- Excluir quadrinho");
-			Console.WriteLine("0- Visualizar quadrinho");
-            Console.WriteLine("  --_--_--_--_--_--");
-            Console.WriteLine("C- Busca por Tipo de Quadrinho");
+            Console.WriteLine("");
+			Console.WriteLine("Autores # 1-Listar	2-Inserir novo	3-Atualizar");
+			Console.WriteLine("	 4-Excluir	5-Visualizar por ID");
+            Console.WriteLine("Comics #  6-Listar	7-Inserir novo	8-Atualizar");
+			Console.WriteLine("	 9-Excluir	0-Visualizar por ID");
+            Console.WriteLine("	 Q- Busca por Tipo de Quadrinho");
 			Console.WriteLine("C- Limpar Tela");
 			Console.WriteLine("X- Sair");
-			Console.WriteLine("\n\n");
+			Console.WriteLine("");
 
 			string opcaoUsuario = Console.ReadLine().ToUpper();
 			Console.WriteLine();
