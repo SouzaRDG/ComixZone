@@ -132,10 +132,27 @@ namespace ComixZone
 		{
 			Console.Write("\nDigite o id do autor: ");
 			int indice = int.Parse(Console.ReadLine());
+			bool obrasEncontradas = false;
 
 			var autor = repositorioAutor.RetornaPorId(indice);
-
 			Console.WriteLine(autor);
+			Console.Write("Obras cadastradas: ");
+			foreach(var quadrinho in repositorioQuadrinho.Lista())
+			{
+				if(quadrinho.retornaIdIlustradores().Contains(autor))
+				{
+					Console.WriteLine("#ID {0}: - {1}", quadrinho.retornaId(), quadrinho.retornaTitulo());
+					obrasEncontradas = true;
+					continue;
+				}
+				if(quadrinho.retornaIdRoteiristas().Contains(autor))
+				{
+					Console.WriteLine("#ID {0}: - {1}", quadrinho.retornaId(), quadrinho.retornaTitulo());
+					obrasEncontradas = true;
+					continue;
+				}
+			}
+			if(!obrasEncontradas) Console.Write("Nenhuma obra encontrada");
 		}
 
         private static void VisualizarQuadrinho()
