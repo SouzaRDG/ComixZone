@@ -5,15 +5,14 @@ namespace ComixZone.Classes
 {
     public class Livro : QuadrinhoBase
     {
-        public Livro(int id, string titulo, string sinopse, List<Genero> generos, 
-                            List<Autor> idRoteiristas, List<Autor> idIlustradores, TipoQuadrinho tipoQuadrinho)
+        public Livro(int id, string titulo, string sinopse, int ano, List<Genero> generos, 
+                            List<Autor> idRoteiristas, TipoQuadrinho tipoQuadrinho)
         {
             this.id = id;
             this.titulo = titulo;
             this.sinopse = sinopse;
             this.generos = generos;
             this.roteiristas = idRoteiristas;
-            this.ilustradores = idIlustradores;
             this.tipoQuadrinho = TipoQuadrinho.Livro;
             this.excluido = false;
         }

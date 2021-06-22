@@ -6,7 +6,7 @@ namespace ComixZone.Classes
     public class LightNovel : QuadrinhoBase
     {
         private int numeroDeVolumes;
-        public LightNovel(int id, string titulo, string sinopse, List<Genero> generos, List<Autor> idRoteiristas, 
+        public LightNovel(int id, string titulo, string sinopse, int ano, List<Genero> generos, List<Autor> idRoteiristas, 
                             List<Autor> idIlustradores, TipoQuadrinho tipoQuadrinho, int numeroDeVolumes)
         {
             this.id = id;

@@ -6,7 +6,7 @@ namespace ComixZone.Classes
     public class ComicBook : QuadrinhoBase
     {
         private int numeroDeVolumes;
-        public ComicBook(int id, string titulo, string sinopse, List<Genero> generos, List<Autor> idRoteiristas, 
+        public ComicBook(int id, string titulo, string sinopse, int ano, List<Genero> generos, List<Autor> idRoteiristas, 
                             List<Autor> idIlustradores, TipoQuadrinho tipoQuadrinho, int numeroDeVolumes)
         {
             this.id = id;
