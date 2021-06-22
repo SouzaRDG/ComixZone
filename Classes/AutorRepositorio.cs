@@ -5,6 +5,7 @@ namespace ComixZone.Classes
 {
     public class AutorRepositorio : IRepositorio<Autor>
     {
+        private List<Autor> listaAutor = new List<Autor>();
         public AutorRepositorio()
         {
             this.Insere(new Autor(0,"Desconhecido/Nenhum","---",TipoAutor.Roteirista_e_Ilustrador));
@@ -12,32 +13,32 @@ namespace ComixZone.Classes
 
         public void Atualiza(int id, Autor entidade)
         {
-            throw new System.NotImplementedException();
+            listaAutor[id] = entidade;
         }
 
         public void Exclui(int id)
         {
-            throw new System.NotImplementedException();
+            listaAutor[id].Excluir();
         }
 
         public void Insere(Autor entidade)
         {
-            throw new System.NotImplementedException();
+            listaAutor.Add(entidade);
         }
 
         public List<Autor> Lista()
         {
-            throw new System.NotImplementedException();
+            return listaAutor;
         }
 
         public int ProximoId()
         {
-            throw new System.NotImplementedException();
+            return listaAutor.Count;
         }
 
         public Autor RetornaPorId(int id)
         {
-            throw new System.NotImplementedException();
+            return listaAutor[id];
         }
     }
 }

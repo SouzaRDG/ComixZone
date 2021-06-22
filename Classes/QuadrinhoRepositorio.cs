@@ -5,38 +5,35 @@ namespace ComixZone.Classes
 {
     public class QuadrinhoRepositorio : IRepositorio<QuadrinhoBase>
     {
-        public QuadrinhoRepositorio()
-        {
-        }
-
+        private List<QuadrinhoBase> listaQuadrinhos = new List<QuadrinhoBase>();
         public void Atualiza(int id, QuadrinhoBase entidade)
         {
-            throw new System.NotImplementedException();
+            listaQuadrinhos[id] = entidade;
         }
 
         public void Exclui(int id)
         {
-            throw new System.NotImplementedException();
+            listaQuadrinhos[id].Excluir();
         }
 
         public void Insere(QuadrinhoBase entidade)
         {
-            throw new System.NotImplementedException();
+            listaQuadrinhos.Add(entidade);
         }
 
         public List<QuadrinhoBase> Lista()
         {
-            throw new System.NotImplementedException();
+            return listaQuadrinhos;
         }
 
         public int ProximoId()
         {
-            throw new System.NotImplementedException();
+            return listaQuadrinhos.Count;
         }
 
         public QuadrinhoBase RetornaPorId(int id)
         {
-            throw new System.NotImplementedException();
+            return listaQuadrinhos[id];
         }
     }
 }
