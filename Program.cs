@@ -175,8 +175,6 @@ namespace ComixZone
             Console.Write("\nDigite a biografia do Autor: ");
 			string entradaBio = Console.ReadLine();
 
-			// https://docs.microsoft.com/pt-br/dotnet/api/system.enum.getvalues?view=netcore-3.1
-			// https://docs.microsoft.com/pt-br/dotnet/api/system.enum.getname?view=netcore-3.1
 			foreach (int i in Enum.GetValues(typeof(TipoAutor)))
 			{
 				Console.WriteLine("{0}-{1}", i, Enum.GetName(typeof(TipoAutor), i));
@@ -259,66 +257,8 @@ namespace ComixZone
 			    entradaVolumes = int.Parse(Console.ReadLine());
             }
 
-            switch(entradaTipo)
-            {
-                case (int)TipoQuadrinho.Comics: 
-                    ComicBook novoComic = new ComicBook(id: repositorioQuadrinho.ProximoId(),
-										sinopse: entradaSinopse,
-										titulo: entradaTitulo,
-										ano: entradaAno,
-										generos: entradaListaGenero,
-                                        idRoteiristas: entradaListaRoteirista,
-                                        idIlustradores: entradaListaIlustrador,
-                                        tipoQuadrinho: (TipoQuadrinho)entradaTipo,
-                                        numeroDeVolumes: entradaVolumes);
-                    repositorioQuadrinho.Atualiza(indice, novoComic);
-                    break;
-                case (int)TipoQuadrinho.GraphicNovel: 
-                    GraphicNovel novoGraphic = new GraphicNovel(id: repositorioQuadrinho.ProximoId(),
-										sinopse: entradaSinopse,
-										titulo: entradaTitulo,
-										ano: entradaAno,
-										generos: entradaListaGenero,
-                                        idRoteiristas: entradaListaRoteirista,
-                                        idIlustradores: entradaListaIlustrador,
-                                        tipoQuadrinho: (TipoQuadrinho)entradaTipo);
-                    repositorioQuadrinho.Atualiza(indice, novoGraphic);
-                    break;
-                case (int)TipoQuadrinho.Manga: 
-                    Manga novoManga = new Manga(id: repositorioQuadrinho.ProximoId(),
-										sinopse: entradaSinopse,
-										titulo: entradaTitulo,
-										ano: entradaAno,
-										generos: entradaListaGenero,
-                                        idRoteiristas: entradaListaRoteirista,
-                                        idIlustradores: entradaListaIlustrador,
-                                        tipoQuadrinho: (TipoQuadrinho)entradaTipo,
-                                        numeroDeVolumes: entradaVolumes);
-                    repositorioQuadrinho.Atualiza(indice, novoManga);
-                    break;
-                case (int)TipoQuadrinho.Livro: 
-                    Livro novoLivro = new Livro(id: repositorioQuadrinho.ProximoId(),
-										sinopse: entradaSinopse,
-										titulo: entradaTitulo,
-										ano: entradaAno,
-										generos: entradaListaGenero,
-                                        idRoteiristas: entradaListaRoteirista,
-                                        tipoQuadrinho: (TipoQuadrinho)entradaTipo);
-                    repositorioQuadrinho.Atualiza(indice, novoLivro);
-                    break;
-                case (int)TipoQuadrinho.LightNovel: 
-                    LightNovel novaLN = new LightNovel(id: repositorioQuadrinho.ProximoId(),
-										sinopse: entradaSinopse,
-										titulo: entradaTitulo,
-										ano: entradaAno,
-										generos: entradaListaGenero,
-                                        idRoteiristas: entradaListaRoteirista,
-                                        idIlustradores: entradaListaIlustrador,
-                                        tipoQuadrinho: (TipoQuadrinho)entradaTipo,
-                                        numeroDeVolumes: entradaVolumes);
-                    repositorioQuadrinho.Atualiza(indice, novaLN);
-                    break;
-            }
+            AdicionaQuadrinhoAoRepositorio(entradaTipo, entradaSinopse, entradaTitulo, entradaAno, entradaListaGenero, 
+											entradaListaRoteirista, entradaListaIlustrador, entradaVolumes);
 		}
 
         private static void InserirAutor()
@@ -413,7 +353,15 @@ namespace ComixZone
 			    entradaVolumes = int.Parse(Console.ReadLine());
             }
 
-            switch(entradaTipo)
+            AdicionaQuadrinhoAoRepositorio(entradaTipo, entradaSinopse, entradaTitulo, entradaAno, entradaListaGenero, 
+											entradaListaRoteirista, entradaListaIlustrador, entradaVolumes);
+		}
+
+		private static void AdicionaQuadrinhoAoRepositorio(int entradaTipo, string entradaSinopse, string entradaTitulo, int entradaAno,
+																		 List<Genero> entradaListaGenero, List<Autor> entradaListaRoteirista,
+																		 List<Autor> entradaListaIlustrador, int entradaVolumes)
+		{
+			switch(entradaTipo)
             {
                 case (int)TipoQuadrinho.Comics: 
                     ComicBook novoComic = new ComicBook(id: repositorioQuadrinho.ProximoId(),
