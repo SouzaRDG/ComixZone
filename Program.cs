@@ -81,8 +81,11 @@ namespace ComixZone
 			bool encontrado = false;
 			foreach (var quadrinho in lista)
 			{
-				encontrado = true;
-				if(!quadrinho.retornaExcluido() && quadrinho.retornaTipoQuadrinho() == (TipoQuadrinho)entradaTipo) Console.WriteLine("#ID {0}: - {1}", quadrinho.retornaId(), quadrinho.retornaTitulo());
+				if(!quadrinho.retornaExcluido() && quadrinho.retornaTipoQuadrinho() == (TipoQuadrinho)entradaTipo) 
+				{
+					encontrado = true;
+					Console.WriteLine("#ID {0}: - {1}", quadrinho.retornaId(), quadrinho.retornaTitulo());
+				}
 			}
 			if (!encontrado)
 			{
