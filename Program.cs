@@ -277,7 +277,7 @@ namespace ComixZone
 			    entradaVolumes = int.Parse(Console.ReadLine());
             }
 
-            AdicionaQuadrinhoAoRepositorio(entradaTipo, entradaSinopse, entradaTitulo, entradaAno, entradaListaGenero, 
+            AdicionaQuadrinhoAoRepositorio(indice, entradaTipo, entradaSinopse, entradaTitulo, entradaAno, entradaListaGenero, 
 											entradaListaRoteirista, entradaListaIlustrador, entradaVolumes);
 		}
 
@@ -373,18 +373,20 @@ namespace ComixZone
 			    entradaVolumes = int.Parse(Console.ReadLine());
             }
 
-            AdicionaQuadrinhoAoRepositorio(entradaTipo, entradaSinopse, entradaTitulo, entradaAno, entradaListaGenero, 
+			int id = repositorioQuadrinho.ProximoId();
+
+            AdicionaQuadrinhoAoRepositorio(id, entradaTipo, entradaSinopse, entradaTitulo, entradaAno, entradaListaGenero, 
 											entradaListaRoteirista, entradaListaIlustrador, entradaVolumes);
 		}
 
-		private static void AdicionaQuadrinhoAoRepositorio(int entradaTipo, string entradaSinopse, string entradaTitulo, int entradaAno,
+		private static void AdicionaQuadrinhoAoRepositorio(int entradaId, int entradaTipo, string entradaSinopse, string entradaTitulo, int entradaAno,
 																		 List<Genero> entradaListaGenero, List<Autor> entradaListaRoteirista,
 																		 List<Autor> entradaListaIlustrador, int entradaVolumes)
 		{
 			switch(entradaTipo)
             {
                 case (int)TipoQuadrinho.Comics: 
-                    ComicBook novoComic = new ComicBook(id: repositorioQuadrinho.ProximoId(),
+                    ComicBook novoComic = new ComicBook(id: entradaId,
 										sinopse: entradaSinopse,
 										titulo: entradaTitulo,
 										ano: entradaAno,
@@ -396,7 +398,7 @@ namespace ComixZone
                     repositorioQuadrinho.Insere(novoComic);
                     break;
                 case (int)TipoQuadrinho.GraphicNovel: 
-                    GraphicNovel novoGraphic = new GraphicNovel(id: repositorioQuadrinho.ProximoId(),
+                    GraphicNovel novoGraphic = new GraphicNovel(id: entradaId,
 										sinopse: entradaSinopse,
 										titulo: entradaTitulo,
 										ano: entradaAno,
@@ -407,7 +409,7 @@ namespace ComixZone
                     repositorioQuadrinho.Insere(novoGraphic);
                     break;
                 case (int)TipoQuadrinho.Manga: 
-                    Manga novoManga = new Manga(id: repositorioQuadrinho.ProximoId(),
+                    Manga novoManga = new Manga(id: entradaId,
 										sinopse: entradaSinopse,
 										titulo: entradaTitulo,
 										ano: entradaAno,
@@ -419,7 +421,7 @@ namespace ComixZone
                     repositorioQuadrinho.Insere(novoManga);
                     break;
                 case (int)TipoQuadrinho.Livro: 
-                    Livro novoLivro = new Livro(id: repositorioQuadrinho.ProximoId(),
+                    Livro novoLivro = new Livro(id: entradaId,
 										sinopse: entradaSinopse,
 										titulo: entradaTitulo,
 										ano: entradaAno,
@@ -429,7 +431,7 @@ namespace ComixZone
                     repositorioQuadrinho.Insere(novoLivro);
                     break;
                 case (int)TipoQuadrinho.LightNovel: 
-                    LightNovel novaLN = new LightNovel(id: repositorioQuadrinho.ProximoId(),
+                    LightNovel novaLN = new LightNovel(id: entradaId,
 										sinopse: entradaSinopse,
 										titulo: entradaTitulo,
 										ano: entradaAno,
